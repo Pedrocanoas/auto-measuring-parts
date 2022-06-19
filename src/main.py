@@ -1,54 +1,31 @@
-import cv2
-import logging as log
-import datetime as dt
-from time import sleep
-from functions.login_interface import LoginScreenHandler
-from functions.two_factor_auth import check_two_factor_auth
+import traceback
+from functions.app_handler import AppHandler
+from exceptions.custom_exceptions import InvalidToken
 
 
-def Login():
-    # Run login screen
-    _instance = LoginScreenHandler()
-    _instance.run()
+def main_function():
+    run_instance = AppHandler()
+    run_instance.call_init_screen()
+    # run_instance.call_check_token()
+    # run_instance.build_url_video()
+    # run_instance.set_object_measure_area()
+    # run_instance.open_webcam()
+    # run_instance.object_measure_handler()
 
-    # Get data contains in screen
-    ip_addr = _instance.get_value_ip_adress()
-    port = _instance.get_value_port()
-    token = _instance.get_value_token()
 
-    video = cv2.VideoCapture(0)
-    url = f"http://{ip_addr}:{port}/video"
-    check_token = check_two_factor_auth(entry_code=token)
+if "__main__" == __name__:
+    print("\n\t\t\t\t\t\t==================================")
+    print("\t\t\t\t\t\tSistema de Auto Medição de Objetos")
+    print("\t\t\t\t\t\t==================================\n")
 
-    if not check_token:
-        print("Token inválido")
-        return False    # Change later
-    
-    print("Token validado com sucesso")
-    video.open(url)
+    try:
+        print("[INFO] -> Executando sistema...")
+        main_function()
+        print("[INFO] -> Sistema executado com sucesso!!!")
 
-    while True:
-        if not video.isOpened():
-            print('Unable to load camera.')
-            sleep(5)
-            pass
+    except InvalidToken:
+        print("[INFO] -> Timeout ao verificar Token de acesso a camera!")
 
-        # # Capture frame-by-frame
-        ret, frame = video.read()
-
-        # Display the resulting frame
-        cv2.imshow('Video', frame)
-
-        key = cv2.waitKey(1)
-
-        if key == 27:
-            break
-
-        # Display the resulting frame
-        cv2.imshow('Video', frame)
-
-    # # When everything is done, release the capture
-    # video.release()
-    # cv2.destroyAllWindows()
-
-Login()
+    except Exception as e:
+        print(f"[INFO] -> Erro ao executar sistema: {e}")
+        print(f"[LOG ERROR] -> {traceback.format_exc}")

@@ -1,52 +1,27 @@
-import tkinter as tk
+import eel
+from utils.environment import MODELS_PATH
 
 
-
-class LoginScreenHandler:
-    def __init__(self): 
-        self.tk_instance = tk.Tk()
-        self.screen_width = 400
-        self.screen_height = 300
-        self.label_ip = "IP:"
-        self.label_port = "Porta: "
-        self.label_token = "Token:"
+class InitialScreenHandler:
+    @eel.expose
+    def camera_params(front_ip, front_port, front_token):
+        print(f"front_ip: {front_ip}")
+        print(f"front_port: {front_port}")
+        print(f"front_token: {front_token}")
+        
+        global body_camera_params
+        body_camera_params = {
+            "ip": front_ip,
+            "port": front_port,
+            "token": front_token
+        }
+        return body_camera_params
     
-    def initialize_login_screen(self):
-        self.canvas_instance = tk.Canvas(self.tk_instance, width=400, height=300)
-        self.canvas_instance.pack()
-
-        self.ip = tk.Entry(self.tk_instance)
-        self.canvas_instance.create_window(225, 120, window=self.ip)
-        label_ip = tk.Label(self.tk_instance, text=self.label_ip)
-        self.canvas_instance.create_window(125, 120, window=label_ip)
-
-        self.port = tk.Entry(self.tk_instance)
-        self.canvas_instance.create_window(225, 140, window=self.port)
-        label_port = tk.Label(self.tk_instance, text=self.label_port)
-        self.canvas_instance.create_window(125, 140, window=label_port)
-
-        self.token = tk.Entry(self.tk_instance)
-        self.canvas_instance.create_window(225, 100, window=self.token)
-        label_token = tk.Label(self.tk_instance, text=self.label_token)
-        self.canvas_instance.create_window(125, 100, window=label_token)
-
-    def screen_action(self):
-        self.value_ip_adress = self.ip.get()
-        self.value_port = self.port.get()
-        self.value_token = self.token.get()
-        self.tk_instance.destroy()
-
+    def call_initial_screen(self):
+        eel.init(MODELS_PATH)
+        eel.start("index.html")
+        # eel.start("index.html", mode='chrome', cmdline_args=['--kiosk']) # Full Screen
+    
     def run(self):
-        self.initialize_login_screen()
-        submit_button = tk.Button(text='Login', command=self.screen_action)
-        self.canvas_instance.create_window(200, 170, window=submit_button)
-        self.tk_instance.mainloop()
-
-    def get_value_ip_adress(self):
-        return self.value_ip_adress
-
-    def get_value_port(self):
-        return self.value_port
-    
-    def get_value_token(self):
-        return self.value_token
+        self.call_initial_screen()
+        
