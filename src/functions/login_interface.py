@@ -1,21 +1,16 @@
 import eel
+import requests
 from utils.environment import MODELS_PATH
 
-
+@eel.expose
 class InitialScreenHandler:
-    @eel.expose
-    def camera_params(front_ip, front_port, front_token):
-        print(f"front_ip: {front_ip}")
-        print(f"front_port: {front_port}")
-        print(f"front_token: {front_token}")
-        
-        global body_camera_params
-        body_camera_params = {
-            "ip": front_ip,
-            "port": front_port,
-            "token": front_token
-        }
-        return body_camera_params
+    def camera_params(front_ip, front_port, front_user, front_password):
+        url = f"http://{front_ip}:{front_port}/video"
+        response = requests.get(url, auth=(front_user, front_password))
+
+        print(response.status_code)
+        print(response.json())
+        return True
     
     def call_initial_screen(self):
         eel.init(MODELS_PATH)

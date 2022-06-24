@@ -6,9 +6,11 @@
 		<title>AUTO MEASURING PARTS | HOME</title>
 		<h2>Start</h2>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"><link rel="stylesheet" href="./style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script type="text/javascript" src="/script.js"></script>
 		<script type="text/javascript" src="/eel.js"></script>
 	</head>
+	
 	<body>
 
 	<body class="align">
@@ -23,8 +25,12 @@
 				<input id="port_value" type="text" name="porta" class="form__input" placeholder="IP port" required>
 			</div>
 			<div class="form__field">
-				<label for="token_value"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lock"></use></svg><span class="hidden">Password</span></label>
-				<input id="token_value" type="text" name="token" class="form__input" placeholder="Google Authenticator" required>
+				<label for="user_value"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lock"></use></svg><span class="hidden">Password</span></label>
+				<input id="user_value" type="text" name="user" class="form__input" placeholder="Usuario" required>
+			</div>
+			<div class="form__field">
+				<label for="pass_value"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lock"></use></svg><span class="hidden">Password</span></label>
+				<input id="pass_value" type="text" name="pass" class="form__input" placeholder="Senha" required>
 			</div>
 			<div class="form__field">
 				<input type="submit" value="Submit">

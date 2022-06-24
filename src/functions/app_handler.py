@@ -25,7 +25,7 @@ class AppHandler:
 
     def build_url_video(self):
         # self.url = f"http://{self.ip_addr}:{self.port}/video"
-        self.url = "http://192.168.1.66:4747/video"
+        self.url = "http://192.168.0.5:4747/video"
         print("[INFO] -> Token validado com sucesso")
 
     def set_object_measure_area(self):
@@ -66,12 +66,9 @@ class AppHandler:
                         cv2.arrowedLine(imgContours2, (nPoints[0][0][0], nPoints[0][0][1]), (nPoints[2][0][0], nPoints[2][0][1]),
                                         (255, 0, 255), 3, 8, 0, 0.05)
                         x, y, w, h = obj[3]
-                        cv2.putText(imgContours2, '{}cm'.format(nW), (x + 30, y - 10), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1.5,
-                                    (255, 0, 255), 2)
-                        cv2.putText(imgContours2, '{}cm'.format(nH), (x - 70, y + h // 2), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1.5,
-                                    (255, 0, 255), 2)
+                        cv2.putText(imgContours2, '{}cm'.format(nW), (x + 30, y - 10), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1.5, (255, 0, 255), 2)
+                        cv2.putText(imgContours2, '{}cm'.format(nH), (x - 70, y + h // 2), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1.5, (255, 0, 255), 2)
                 cv2.imshow('A4', imgContours2)
-
             img = cv2.resize(img,(0,0),None,0.5,0.5)
             cv2.imshow('Original',img)
             
