@@ -7,3 +7,5 @@ W_MEASURE_AREA = 210
 H_MEASURE_AREA = 297
 
 MODELS_PATH = rf"{pathlib.Path(__file__).parent.parent}\templates"
+
+JSON_FILE_FULL_PATH = rf"{pathlib.Path(__file__).parent}\\url.json"

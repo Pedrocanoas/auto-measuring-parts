@@ -1,21 +1,27 @@
 import eel
+import json
+import _thread
+import subprocess
 from utils.environment import MODELS_PATH
+from utils.environment import JSON_FILE_FULL_PATH
+from functions.two_factor_auth import check_two_factor_auth
 
 
 class InitialScreenHandler:
     @eel.expose
     def camera_params(front_ip, front_port, front_token):
-        print(f"front_ip: {front_ip}")
-        print(f"front_port: {front_port}")
-        print(f"front_token: {front_token}")
-        
-        global body_camera_params
-        body_camera_params = {
-            "ip": front_ip,
-            "port": front_port,
-            "token": front_token
+        body_response_js = {
+            'ip': front_ip,
+            'port': front_port
         }
-        return body_camera_params
+
+        check_token = check_two_factor_auth(entry_code=front_token)
+        if check_token:
+            with open(JSON_FILE_FULL_PATH, 'w') as f:
+                json.dump(body_response_js, f)
+            print("Matando Thread...")
+            subprocess.call("taskkill /F /IM chrome.exe")
+            _thread.interrupt_main()
     
     def call_initial_screen(self):
         eel.init(MODELS_PATH)
@@ -24,4 +30,3 @@ class InitialScreenHandler:
     
     def run(self):
         self.call_initial_screen()
-        

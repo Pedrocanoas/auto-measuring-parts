@@ -1,32 +1,35 @@
+import os
 import cv2
+import json
 from time import sleep
 from utils.environment import SCALE
 from utils.environment import W_MEASURE_AREA
 from utils.environment import H_MEASURE_AREA
+from utils.environment import JSON_FILE_FULL_PATH
 from dependencies.treat_image import reorder
 from dependencies.treat_image import warpImg
 from dependencies.treat_image import findDis
 from dependencies.treat_image import getContours
 from exceptions.custom_exceptions import InvalidToken
 from functions.login_interface import InitialScreenHandler
-from functions.two_factor_auth import check_two_factor_auth
 
 
 class AppHandler:
     def call_init_screen(self):
         init_screen_instance = InitialScreenHandler()
-        init_screen_instance.run()
+        init_screen_instance.run()    
 
-    def call_check_token(self):
-        check_token = check_two_factor_auth(entry_code=self.token)
-        if not check_token:
-            print("[INFO] -> Token inválido")
-            # raise InvalidToken
+    def get_json_response_js(self):
+        f = open(JSON_FILE_FULL_PATH)
+        json_response_js = json.load(f)
+        self.ip = json_response_js['ip']
+        self.port = json_response_js['port']
 
     def build_url_video(self):
-        # self.url = f"http://{self.ip_addr}:{self.port}/video"
-        self.url = "http://192.168.1.66:4747/video"
-        print("[INFO] -> Token validado com sucesso")
+        print("[WARNING] -> POR FAVOR, ABRA O APLICATIVO DROIDCAM EM SEU CELULAR ANTES DE CONTINUAR!!!")
+        os.system("PAUSE")
+        self.get_json_response_js()
+        self.url = f"http://{self.ip}:{self.port}/video"
 
     def set_object_measure_area(self):
         self.wP = W_MEASURE_AREA * SCALE

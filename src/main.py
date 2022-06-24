@@ -6,11 +6,10 @@ from exceptions.custom_exceptions import InvalidToken
 def main_function():
     run_instance = AppHandler()
     run_instance.call_init_screen()
-    # run_instance.call_check_token()
-    # run_instance.build_url_video()
-    # run_instance.set_object_measure_area()
-    # run_instance.open_webcam()
-    # run_instance.object_measure_handler()
+    run_instance.build_url_video()
+    run_instance.set_object_measure_area()
+    run_instance.open_webcam()
+    run_instance.object_measure_handler()
 
 
 if "__main__" == __name__:
