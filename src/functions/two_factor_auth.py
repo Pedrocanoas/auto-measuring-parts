@@ -23,4 +23,4 @@ def check_two_factor_auth(entry_code):
         code_google_auth = totp.now()
         if int(entry_code) == int(code_google_auth):
             return True
-        return False
+    return False
